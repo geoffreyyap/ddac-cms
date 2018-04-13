@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CMS.dataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="Booking_ID" />
+          </Key>
+          <Property Name="Booking_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Schedule_ID" Type="int" Nullable="false" />
+          <Property Name="Person_ID" Type="int" Nullable="false" />
+          <Property Name="Item_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Item_Description" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Item_Quantity" Type="int" Nullable="false" />
+          <Property Name="Customer_Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Person_ID" />
+          </Key>
+          <Property Name="Person_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Person_Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Person_Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Person_Role" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Schedule_ID" />
+          </Key>
+          <Property Name="Schedule_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Schedule_Departure_Date" Type="datetime" Nullable="false" />
+          <Property Name="Schedule_Arrival_Date" Type="datetime" Nullable="false" />
+          <Property Name="Schedule_Status" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ship_Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Booking__Person___4E88ABD4">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Person_ID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Person_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__Schedul__4D94879B">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="Schedule_ID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Schedule_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CMSdataModelStoreContainer">
+          <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Schedule" EntityType="Self.Schedule" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Booking__Person___4E88ABD4" Association="Self.FK__Booking__Person___4E88ABD4">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__Schedul__4D94879B" Association="Self.FK__Booking__Schedul__4D94879B">
+            <End Role="Schedule" EntitySet="Schedule" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CMS.dataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="Booking_ID" />
+          </Key>
+          <Property Name="Booking_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Schedule_ID" Type="Int32" Nullable="false" />
+          <Property Name="Person_ID" Type="Int32" Nullable="false" />
+          <Property Name="Item_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Item_Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Item_Quantity" Type="Int32" Nullable="false" />
+          <Property Name="Customer_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="Self.FK__Booking__Person___4E88ABD4" FromRole="Booking" ToRole="Person" />
+          <NavigationProperty Name="Schedule" Relationship="Self.FK__Booking__Schedul__4D94879B" FromRole="Booking" ToRole="Schedule" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Person_ID" />
+          </Key>
+          <Property Name="Person_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Person_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Person_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Person_Role" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK__Booking__Person___4E88ABD4" FromRole="Person" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="Schedule">
+          <Key>
+            <PropertyRef Name="Schedule_ID" />
+          </Key>
+          <Property Name="Schedule_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Schedule_Departure_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Schedule_Arrival_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Schedule_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ship_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK__Booking__Schedul__4D94879B" FromRole="Schedule" ToRole="Booking" />
+        </EntityType>
+        <Association Name="FK__Booking__Person___4E88ABD4">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Person_ID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Person_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__Schedul__4D94879B">
+          <End Role="Schedule" Type="Self.Schedule" Multiplicity="1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Schedule">
+              <PropertyRef Name="Schedule_ID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Schedule_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bookings" EntityType="Self.Booking" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="Schedules" EntityType="Self.Schedule" />
+          <AssociationSet Name="FK__Booking__Person___4E88ABD4" Association="Self.FK__Booking__Person___4E88ABD4">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__Schedul__4D94879B" Association="Self.FK__Booking__Schedul__4D94879B">
+            <End Role="Schedule" EntitySet="Schedules" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CMSdataModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="CMS.dataModel.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="Booking_ID" ColumnName="Booking_ID" />
+                <ScalarProperty Name="Schedule_ID" ColumnName="Schedule_ID" />
+                <ScalarProperty Name="Person_ID" ColumnName="Person_ID" />
+                <ScalarProperty Name="Item_Name" ColumnName="Item_Name" />
+                <ScalarProperty Name="Item_Description" ColumnName="Item_Description" />
+                <ScalarProperty Name="Item_Quantity" ColumnName="Item_Quantity" />
+                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="CMS.dataModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="Person_ID" ColumnName="Person_ID" />
+                <ScalarProperty Name="Person_Name" ColumnName="Person_Name" />
+                <ScalarProperty Name="Person_Password" ColumnName="Person_Password" />
+                <ScalarProperty Name="Person_Role" ColumnName="Person_Role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schedules">
+            <EntityTypeMapping TypeName="CMS.dataModel.Schedule">
+              <MappingFragment StoreEntitySet="Schedule">
+                <ScalarProperty Name="Schedule_ID" ColumnName="Schedule_ID" />
+                <ScalarProperty Name="Schedule_Departure_Date" ColumnName="Schedule_Departure_Date" />
+                <ScalarProperty Name="Schedule_Arrival_Date" ColumnName="Schedule_Arrival_Date" />
+                <ScalarProperty Name="Schedule_Status" ColumnName="Schedule_Status" />
+                <ScalarProperty Name="Ship_Name" ColumnName="Ship_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
