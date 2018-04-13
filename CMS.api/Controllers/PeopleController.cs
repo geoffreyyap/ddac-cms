@@ -78,6 +78,7 @@ namespace CMS.api.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Person_ID,Person_Name,Person_Password,Person_Role")] Person person)
         {
+            person.Person_Role = "Agent";
             if (ModelState.IsValid)
             {
                 db.People.Add(person);
